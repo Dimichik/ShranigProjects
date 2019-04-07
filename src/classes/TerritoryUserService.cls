@@ -36,10 +36,10 @@ public class TerritoryUserService {
 		return result;
 	}
 
-	private static Set<Id> getSetFromList(List<sObject> listObjs, String searchField) {
+	private static Set<Id> getSetFromList(List<sObject> listObjects, String searchField) {
 		Set<Id> result = new Set<Id>();
-		for (sObject curentSO : listObjs) {
-			result.add((Id) curentSO.get(searchField));
+		for (sObject currentSObject : listObjects) {
+			result.add((Id) currentSObject.get(searchField));
 		}
 		return result;
 	}

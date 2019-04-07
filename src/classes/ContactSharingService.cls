@@ -19,10 +19,17 @@ public class ContactSharingService {
 		return contactSharedList;
 	}
 
+	public static List<Contact__Share> deleteAccessToContact(List<Account> accounts, Id userId) {
+		List<Contact__Share> contactSharedList = [
+				SELECT id
+				FROM Contact__Share
+				WHERE UserOrGroupId =: userId AND ParentId IN (SELECT Contact__c FROM Reference__c WHERE Account__c IN :accounts)
+		];
+		return contactSharedList;
+	}
+
 	public static List<Contact__Share> deleteAccessToContact(List<Account> accounts) {
-		System.debug('accounts = ' + accounts);
 		List<Contact__Share> contactsShareToDelete = [SELECT Id, ParentId FROM Contact__Share WHERE ParentId IN (SELECT Contact__c FROM Reference__c WHERE Account__c IN :accounts)];
-		System.debug('contactsShareToDelete = ' + contactsShareToDelete);
 		return contactsShareToDelete;
 	}
 }
