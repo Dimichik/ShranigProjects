@@ -3,15 +3,12 @@
  */
 public class AccountTriggerHandler {
 
-	private static Set<Territory__c> parentsTerritories = new Set<Territory__c>();
 
 	public static void beforeUpdate(List<SObject> newTerritory) {
 		List<Account> accountToDelete = AccountTriggerService.changedTerritory(newTerritory);
 		List<AccountShare> accShare = AccountSharingService.deleteSharesAccount(accountToDelete);
 		List<Contact__Share> contractShares = ContactSharingService.deleteAccessToContact(accountToDelete);
-		if (!accShare.isEmpty()) {
 			Database.Delete(accShare, false);
-		}
 		if (!contractShares.isEmpty()) {
 			Database.Delete(contractShares, false);
 		}
@@ -34,7 +31,7 @@ public class AccountTriggerHandler {
 				WHERE Id IN :accountToRecalculateSharing)
 				LIMIT 1
 		];
-		Set<Territory__c> allParentTerritories = getParentHierarchyTerritories(territory);
+		Set<Territory__c> allParentTerritories = AccountTriggerService.getParentHierarchyTerritories(territory);
 		List<User> users = [
 				SELECT Id, Name
 				FROM User
@@ -58,22 +55,5 @@ public class AccountTriggerHandler {
 		if (!contractShares.isEmpty()) {
 			Database.Delete(contractShares, false);
 		}
-	}
-
-
-	public static Set<Territory__c> getParentHierarchyTerritories(Territory__c territory) {
-		parentsTerritories = new Set<Territory__c>();
-		findParentTerritories(territory);
-		return parentsTerritories;
-	}
-
-	private static Set<Territory__c> findParentTerritories(Territory__c childTerritory) {
-		parentsTerritories.add(childTerritory);
-		List<Territory__c> territories = [SELECT Id, ParTerritory__c, Name FROM Territory__c WHERE Id =:childTerritory.ParTerritory__c];
-		for (Territory__c territory : territories) {
-			parentsTerritories.add(territory);
-			findParentTerritories(territory);
-		}
-		return parentsTerritories;
 	}
 }
