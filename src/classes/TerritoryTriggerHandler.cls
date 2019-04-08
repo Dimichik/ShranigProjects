@@ -5,7 +5,7 @@
 public with sharing class TerritoryTriggerHandler {
 
     public static void beforeUpdate(List<SObject> newTerritory){
-        TerritoryTriggerService.isUnique(newTerritory);
+        TerritoryTriggerService.isUniqueTerritoryName(newTerritory);
     }
 
 }

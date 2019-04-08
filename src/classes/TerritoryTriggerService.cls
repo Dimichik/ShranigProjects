@@ -1,6 +1,6 @@
 public class TerritoryTriggerService {
 
-    public static void isUnique(List<SObject> newTerritories) {
+    public static void isUniqueTerritoryName(List<SObject> newTerritories) {
         List<Territory__c> insertedTerritories = (List<Territory__c>) newTerritories;
         Set<Id> parentIds = getSetIdsFromList(newTerritories, 'ParTerritory__c');
         List<Territory__c> existingRecords = [
