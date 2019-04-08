@@ -8,8 +8,5 @@ trigger ReferenceTrigger on Reference__c (before insert, before update, after in
 		if (Trigger.isInsert) {
 			ReferenceTriggerHandler.afterInsert(Trigger.new);
 		}
-		if (Trigger.isUpdate) {
-			ReferenceTriggerHandler.afterUpdate(Trigger.old);
-		}
 	}
 }

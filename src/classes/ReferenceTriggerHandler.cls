@@ -7,10 +7,6 @@ public class ReferenceTriggerHandler {
 		insert ReferenceSharingService.getContactToShareAccess(newReferences);
 	}
 
-	public static void afterUpdate(List<SObject> newReference) {
-
-	}
-
 	public static void beforeDelete(List<Reference__c> oldReference) {
 		Database.delete(ContactSharingService.deleteAccessToContactFromReference(oldReference), false);
 	}

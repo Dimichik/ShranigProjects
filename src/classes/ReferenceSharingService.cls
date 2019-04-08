@@ -4,7 +4,7 @@
 public class ReferenceSharingService {
 	private static Set<Territory__c> parentsTerritories = new Set<Territory__c>();
 
-	public static List<sObject> getContactToShareAccess(List<SObject> newReferences) {
+	public static List<sObject> getContactToShareAccess(List<Reference__c> newReferences) {
 		List<sObject> contactToShareAccess = new List<sObject>();
 		List<Account> accountsForSharingNewContacts = new List<Account>();
 		List<Account> accounts = [
