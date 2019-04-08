@@ -4,7 +4,7 @@
 public class ReferenceSharingService {
 	private static Set<Territory__c> parentsTerritories = new Set<Territory__c>();
 
-	public static void afterInsert(List<SObject> newReferences) {
+	public static List<sObject> getContactToShareAccess(List<SObject> newReferences) {
 		List<sObject> contactToShareAccess = new List<sObject>();
 		List<Account> accountsForSharingNewContacts = new List<Account>();
 		List<Account> accounts = [
@@ -42,18 +42,23 @@ public class ReferenceSharingService {
 					ContactSharingService.shareAccessToContact(accountsToShare, user.Id);
 			contactToShareAccess.addAll(contactsUserShares);
 		}
-		insert contactToShareAccess;
+		return contactToShareAccess;
 	}
 
-	private static Set<Territory__c> getParentHierarchyTerritories(Territory__c territory) {
-		parentsTerritories = new Set<Territory__c>();
+	public static List<sObject> getContactToDeleteShareAccess(List<SObject> oldReference){
+		List<Contact__Share> contactToDelete = ContactSharingService.deleteAccessToContactFromReference(oldReference);
+		return contactToDelete;
+	}
+
+	private static Set < Territory__c > getParentHierarchyTerritories(Territory__c territory) {
+		parentsTerritories = new Set < Territory__c > ();
 		findParentTerritories(territory);
 		return parentsTerritories;
 	}
 
-	private static Set<Territory__c> findParentTerritories(Territory__c childTerritory) {
+	private static Set < Territory__c > findParentTerritories(Territory__c childTerritory) {
 		parentsTerritories.add(childTerritory);
-		List<Territory__c> territories = [SELECT Id, ParTerritory__c, Name FROM Territory__c WHERE Id =:childTerritory.ParTerritory__c];
+		List < Territory__c> territories = [SELECT Id, ParTerritory__c, Name FROM Territory__c WHERE Id =:childTerritory.ParTerritory__c];
 		for (Territory__c territory : territories) {
 			parentsTerritories.add(territory);
 			findParentTerritories(territory);

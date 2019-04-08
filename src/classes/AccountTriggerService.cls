@@ -23,8 +23,5 @@ public class AccountTriggerService {
 		return result;
 	}
 
-	public static List<AccountShare> deleteSharesAccount(List<Account> accounts){
-		List<AccountShare> deleteAccount = [SELECT Id FROM AccountShare WHERE Account.Id IN :accounts];
-		return deleteAccount;
-	}
+
 }

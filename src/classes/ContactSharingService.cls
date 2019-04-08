@@ -23,9 +23,26 @@ public class ContactSharingService {
 		List<Contact__Share> contactSharedList = [
 				SELECT id
 				FROM Contact__Share
-				WHERE UserOrGroupId =: userId AND ParentId IN (SELECT Contact__c FROM Reference__c WHERE Account__c IN :accounts)
+				WHERE UserOrGroupId =: userId AND ParentId IN (SELECT Contact__c
+				FROM Reference__c
+				WHERE Account__c IN :accounts)
 		];
 		return contactSharedList;
+	}
+
+	public static List<Contact__Share> deleteAccessToContactFromReference(List<Reference__c> accounts) {
+		List<Contact__Share> contactsShareToDelete = new List<Contact__Share>();
+		List<Contact__Share> contactsToCheckOnDelete = [
+				SELECT Id, ParentId
+				FROM Contact__Share
+				WHERE ParentId IN (SELECT Contact__c
+				FROM Reference__c
+				WHERE id IN :accounts)
+		];
+		for (Contact__Share contact : contactsShareToDelete) {
+
+		}
+		return contactsShareToDelete;
 	}
 
 	public static List<Contact__Share> deleteAccessToContact(List<Account> accounts) {

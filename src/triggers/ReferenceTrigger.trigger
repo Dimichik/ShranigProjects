@@ -1,7 +1,7 @@
 trigger ReferenceTrigger on Reference__c (before insert, before update, after insert, after update, after delete, before delete) {
 	if (Trigger.isBefore) {
 		if (Trigger.isDelete) {
-//			ReferenceTriggerHandler.beforeInsert(Trigger.new);
+			ReferenceTriggerHandler.beforeDelete(Trigger.old);
 		}
 	}
 	if (Trigger.isAfter) {
@@ -10,9 +10,6 @@ trigger ReferenceTrigger on Reference__c (before insert, before update, after in
 		}
 		if (Trigger.isUpdate) {
 			ReferenceTriggerHandler.afterUpdate(Trigger.old);
-		}
-		if (Trigger.isDelete) {
-			ReferenceTriggerHandler.afterDelete(Trigger.old);
 		}
 	}
 }

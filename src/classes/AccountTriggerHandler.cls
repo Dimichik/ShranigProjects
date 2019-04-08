@@ -7,7 +7,7 @@ public class AccountTriggerHandler {
 
 	public static void beforeUpdate(List<SObject> newTerritory) {
 		List<Account> accountToDelete = AccountTriggerService.changedTerritory(newTerritory);
-		List<AccountShare> accShare = AccountTriggerService.deleteSharesAccount(accountToDelete);
+		List<AccountShare> accShare = AccountSharingService.deleteSharesAccount(accountToDelete);
 		List<Contact__Share> contractShares = ContactSharingService.deleteAccessToContact(accountToDelete);
 		if (!accShare.isEmpty()) {
 			Database.Delete(accShare, false);
