@@ -26,19 +26,12 @@ public class AccountSharingService {
 		return accountShares;
 	}
 
-	public static List<AccountShare> deleteSharesAccount(List<Account> accounts) {
+	public static List<AccountShare> deleteAccessToAccount(List<Account> accounts) {
 		List<AccountShare> deleteAccount = [
 				SELECT Id
 				FROM AccountShare
 				WHERE Account.Id IN :accounts
 		];
 		return deleteAccount;
-	}
-
-	public static void deleteAll() {
-		List<AccountShare> accountShare = [SELECT Id FROM AccountShare WHERE UserOrGroupId ='0051i000000dvkVAAQ'];
-		List<Contact__Share> contactShare = [SELECT Id FROM Contact__Share WHERE UserOrGroupId='0051i000000dvkVAAQ'];
-		delete contactShare;
-		delete accountShare;
 	}
 }
