@@ -12,6 +12,6 @@ public class ReferenceTriggerHandler {
 	}
 
 	public static void beforeDelete(List<Reference__c> oldReference) {
-		Database.delete(ReferenceSharingService.getContactToDeleteShareAccess(oldReference), false);
+		Database.delete(ContactSharingService.deleteAccessToContactFromReference(oldReference), false);
 	}
 }

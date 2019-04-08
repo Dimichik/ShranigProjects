@@ -45,11 +45,6 @@ public class ReferenceSharingService {
 		return contactToShareAccess;
 	}
 
-	public static List<sObject> getContactToDeleteShareAccess(List<SObject> oldReference){
-		List<Contact__Share> contactToDelete = ContactSharingService.deleteAccessToContactFromReference(oldReference);
-		return contactToDelete;
-	}
-
 	private static Set < Territory__c > getParentHierarchyTerritories(Territory__c territory) {
 		parentsTerritories = new Set < Territory__c > ();
 		findParentTerritories(territory);
@@ -65,5 +60,4 @@ public class ReferenceSharingService {
 		}
 		return parentsTerritories;
 	}
-
 }

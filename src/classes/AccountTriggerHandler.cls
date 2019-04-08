@@ -53,6 +53,14 @@ public class AccountTriggerHandler {
 		insert allShares;
 	}
 
+	public static void beforeDelete(List<SObject> oldAccount) {
+		List<Contact__Share> contractShares = ContactSharingService.deleteAccessToContact(oldAccount);
+		if (!contractShares.isEmpty()) {
+			Database.Delete(contractShares, false);
+		}
+	}
+
+
 	public static Set<Territory__c> getParentHierarchyTerritories(Territory__c territory) {
 		parentsTerritories = new Set<Territory__c>();
 		findParentTerritories(territory);

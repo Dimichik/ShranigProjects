@@ -22,6 +22,4 @@ public class AccountTriggerService {
 		}
 		return result;
 	}
-
-
 }
